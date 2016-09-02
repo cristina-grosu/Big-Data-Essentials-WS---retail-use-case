@@ -98,6 +98,6 @@ RUN curl -jksSLH "Cookie: oraclelicense=accept-securebackup-cookie" -o /tmp/unli
     unzip -jo -d ${JAVA_HOME}/jre/lib/security /tmp/unlimited_jce_policy.zip && \
     rm -rf /tmp/unlimited_jce_policy.zip /var/cache/apk/*
 
-RUN apk del wget tar bash curl unzip
+RUN apk del wget tar curl unzip
 
 ENTRYPOINT ["/bin/bash"]
