@@ -1,11 +1,10 @@
 FROM alpine:3.4
 
 RUN apk update 
-RUN apk add --no-cache openssh
-RUN apk add --no-cache wget
-RUN apk add --no-cache tar
-RUN apk add --no-cache bash 
-RUN rm -rf /var/cache/apk/*
+RUN apk add --no-cache openssh wget tar bash curl unzip
+RUN curl -jksSLH "Cookie: oraclelicense=accept-securebackup-cookie" -o /tmp/unlimited_jce_policy.zip "http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip" && \
+    unzip -jo -d ${JAVA_HOME}/jre/lib/security /tmp/unlimited_jce_policy.zip && \
+    rm -rf /tmp/* /var/cache/apk/*
 
 RUN rm -f /etc/ssh/ssh_host_dsa_key /etc/ssh/ssh_host_rsa_key /root/.ssh/id_rsa
 RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key
@@ -97,5 +96,7 @@ RUN apk upgrade --update && \
 RUN echo 'export JAVA_HOME="/opt/jdk"' >> ~/.bashrc && \
     echo 'export PATH="$PATH:/opt/jdk/bin:/opt/jdk/jre/bin"' >> ~/.bashrc && \
     bash ~/.bashrc 
+
+RUN apk del openssh wget tar bash curl unzip
 
 ENTRYPOINT ["/bin/bash"]
