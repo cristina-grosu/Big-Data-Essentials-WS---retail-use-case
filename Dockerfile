@@ -96,7 +96,7 @@ RUN echo 'export JAVA_HOME="/opt/jdk"' >> ~/.bashrc && \
     
 RUN curl -jksSLH "Cookie: oraclelicense=accept-securebackup-cookie" -o /tmp/unlimited_jce_policy.zip "http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip" && \
     unzip -jo -d ${JAVA_HOME}/jre/lib/security /tmp/unlimited_jce_policy.zip && \
-    rm -rf /tmp/* /var/cache/apk/*
+    rm -rf /tmp/unlimited_jce_policy.zip /var/cache/apk/*
 
 RUN apk del wget tar bash curl unzip
 
